@@ -27,8 +27,8 @@ func NewRegistry() *Registry {
 func (r *Registry) ReportDuration() func(*gin.Context) {
 	duration := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Name: "request_duration_seconds",
-			Help: "Display duration by code, method, and route",
+			Name:    "request_duration_seconds",
+			Help:    "Display duration by code, method, and route",
 			Buckets: prometheus.DefBuckets,
 		},
 		[]string{"code", "method", "route"},

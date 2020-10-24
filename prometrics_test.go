@@ -42,7 +42,7 @@ func fetchMetrics(t *testing.T, eng *gin.Engine) map[string]string {
 }
 
 // TestUserHandlers - test assigning handlers to a gin engine
-func  TestUseHandlers(t *testing.T) {
+func TestUseHandlers(t *testing.T) {
 	eng, r := newEngReg()
 
 	eng.Use(r.ReportConcurrentReq())
@@ -56,7 +56,7 @@ func TestConcurrentRequests(t *testing.T) {
 	eng, r := newEngReg()
 
 	eng.Use(r.ReportConcurrentReq())
-	eng.GET("/test", func (c *gin.Context) {
+	eng.GET("/test", func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
 	eng.GET("/metrics", r.DefaultHandler)
@@ -81,23 +81,23 @@ func TestConcurrentRequests(t *testing.T) {
 	// check num request_start and num request_stop
 	start, _ := strconv.Atoi(metricMap["request_start"])
 	stop, _ := strconv.Atoi(metricMap["request_done"])
-	if start != numRequests + 1 {
-		t.Errorf("bad request_start: %v, want %v", start, numRequests + 1)
+	if start != numRequests+1 {
+		t.Errorf("bad request_start: %v, want %v", start, numRequests+1)
 	}
 	// reqDoneCounter increments AFTER the metrics are returned so
 	// the counter never accounts for /metrics finishing
 	if stop != numRequests {
-		t.Errorf("bad request_done: %v, want %v", stop, numRequests + 1)
+		t.Errorf("bad request_done: %v, want %v", stop, numRequests+1)
 	}
 }
 
 func TestDuration(t *testing.T) {
 	eng, r := newEngReg()
 	eng.Use(r.ReportDuration())
-	eng.GET("/good", func (c *gin.Context) {
+	eng.GET("/good", func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
-	eng.GET("/bad", func (c *gin.Context) {
+	eng.GET("/bad", func(c *gin.Context) {
 		c.Status(http.StatusBadRequest)
 	})
 	eng.GET("/ugly", func(c *gin.Context) {
