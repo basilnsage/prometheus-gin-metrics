@@ -73,27 +73,3 @@ func (r *Registry) DefaultHandler(c *gin.Context) {
 		r.reg, promhttp.HandlerFor(r.gat, promhttp.HandlerOpts{}))
 	handler.ServeHTTP(c.Writer, c.Request)
 }
-
-// func main() {
-// 	eng := gin.Default()
-// 	eng.Use(reportConcurrentReq())
-// 	eng.Use(reportDuration())
-//
-// 	eng.GET("/test", func(c *gin.Context) {
-// 		time.Sleep(time.Duration(rand.Float64() * 4.0 * float64(time.Second)))
-// 		c.String(http.StatusOK, "/test called")
-// 	})
-// 	eng.GET("/err", func(c *gin.Context) {
-// 		time.Sleep(time.Duration(rand.Float64() * float64(time.Second)))
-// 		c.String(http.StatusBadGateway, "error")
-// 	})
-// 	eng.GET("/metrics", func(c *gin.Context) {
-// 		promHandler := promhttp.Handler()
-// 		promHandler.ServeHTTP(c.Writer, c.Request)
-// 	})
-//
-// 	log.Print("run on localhost:4567")
-// 	if err := eng.Run(":4567"); err != nil {
-// 		panic(err)
-// 	}
-// }
