@@ -24,12 +24,15 @@ func NewRegistry() *Registry {
 	}
 }
 
-func (r *Registry) ReportDuration() func(*gin.Context) {
+func (r *Registry) ReportDuration(buckets []float64) func(*gin.Context) {
+	if buckets == nil {
+		buckets = prometheus.DefBuckets
+	}
 	duration := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
 			Name:    "request_duration_seconds",
 			Help:    "Display duration by code, method, and route",
-			Buckets: prometheus.DefBuckets,
+			Buckets: buckets,
 		},
 		[]string{"code", "method", "route"},
 	)
